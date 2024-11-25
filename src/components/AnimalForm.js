@@ -32,6 +32,7 @@ const AnimalForm = ({ onNewAnimal }) => {
       Bucket: "agramont-animal-adoption",
       Key: `animals/${image.name}`,
       Body: image,
+      ACL: "public-read", // Permitir acceso público para visualizar la imagen
     };
   
     try {
@@ -39,11 +40,29 @@ const AnimalForm = ({ onNewAnimal }) => {
       const imageURL = data.Location;
   
       const newAnimal = { ...formData, imageURL, adopted: false };
-      if (onNewAnimal) {
-        onNewAnimal(newAnimal); // Asegúrate de que onNewAnimal está definido
-      }
-      alert("Animal publicado exitosamente!");
   
+      // Cargar y actualizar la lista de animales en S3
+      const animalsFile = "animals/animals.json"; // Archivo que almacenará los datos
+      const existingData = await s3
+        .getObject({ Bucket: "agramont-animal-adoption", Key: animalsFile })
+        .promise()
+        .then((response) => JSON.parse(response.Body.toString()))
+        .catch(() => []); // Si no existe el archivo, devolvemos un array vacío
+  
+      const updatedData = [...existingData, newAnimal];
+  
+      // Subir el archivo actualizado
+      await s3
+        .upload({
+          Bucket: "agramont-animal-adoption",
+          Key: animalsFile,
+          Body: JSON.stringify(updatedData),
+          ContentType: "application/json",
+          ACL: "public-read", // Hacerlo accesible
+        })
+        .promise();
+  
+      alert("Animal publicado exitosamente!");
       setFormData({
         name: "",
         breed: "",

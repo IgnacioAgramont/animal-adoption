@@ -1,6 +1,30 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import s3 from "../awsConfig";
 
-const AnimalList = ({ animals }) => {
+const AnimalList = () => {
+  const [animals, setAnimals] = useState([]);
+
+  useEffect(() => {
+    const fetchAnimals = async () => {
+      try {
+        const animalsFile = "animals/animals.json";
+        const data = await s3
+          .getObject({
+            Bucket: "agramont-animal-adoption",
+            Key: animalsFile,
+          })
+          .promise();
+        const animals = JSON.parse(data.Body.toString());
+        setAnimals(animals);
+      } catch (error) {
+        console.error("Error al cargar los animales:", error);
+        setAnimals([]); // Si no hay archivo, dejamos la lista vacía
+      }
+    };
+
+    fetchAnimals();
+  }, []);
+
   return (
     <div>
       <h2>Animales Publicados</h2>
