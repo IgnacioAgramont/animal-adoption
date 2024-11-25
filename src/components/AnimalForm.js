@@ -58,7 +58,6 @@ const AnimalForm = ({ onNewAnimal }) => {
           Key: animalsFile,
           Body: JSON.stringify(updatedData),
           ContentType: "application/json",
-          ACL: "public-read", // Hacerlo accesible
         })
         .promise();
   
