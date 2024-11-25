@@ -4,9 +4,9 @@ import AnimalCard from "./AnimalCard";
 const AnimalList = () => {
   const [animals, setAnimals] = useState([]);
 
-  const addAnimal = (animal) => {
-    setAnimals([...animals, animal]);
-  };
+//   const addAnimal = (animal) => {
+//     setAnimals([...animals, animal]);
+//   };
 
   const markAsAdopted = (id) => {
     setAnimals((prev) =>
