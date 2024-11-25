@@ -27,21 +27,23 @@ const AnimalForm = ({ onNewAnimal }) => {
       alert("Por favor, sube una imagen.");
       return;
     }
-
+  
     const params = {
       Bucket: "agramont-animal-adoption",
       Key: `animals/${image.name}`,
       Body: image,
     };
-
+  
     try {
       const data = await s3.upload(params).promise();
       const imageURL = data.Location;
-
+  
       const newAnimal = { ...formData, imageURL, adopted: false };
-      onNewAnimal(newAnimal);
+      if (onNewAnimal) {
+        onNewAnimal(newAnimal); // Asegúrate de que onNewAnimal está definido
+      }
       alert("Animal publicado exitosamente!");
-
+  
       setFormData({
         name: "",
         breed: "",

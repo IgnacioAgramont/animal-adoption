@@ -1,34 +1,34 @@
-import React, { useState } from "react";
-import AnimalCard from "./AnimalCard";
+import React from "react";
 
-const AnimalList = () => {
-  const [animals, setAnimals] = useState([]);
-
-//   const addAnimal = (animal) => {
-//     setAnimals([...animals, animal]);
-//   };
-
-  const markAsAdopted = (id) => {
-    setAnimals((prev) =>
-      prev.map((animal) =>
-        animal.id === id ? { ...animal, adopted: true } : animal
-      )
-    );
-  };
-
+const AnimalList = ({ animals }) => {
   return (
     <div>
-      <h2>Animales en Adopción</h2>
+      <h2>Animales Publicados</h2>
       {animals.length === 0 ? (
-        <p>No hay animales disponibles en este momento.</p>
+        <p>No hay animales publicados aún.</p>
       ) : (
-        animals.map((animal, index) => (
-          <AnimalCard
-            key={index}
-            animal={{ ...animal, id: index }}
-            onAdopt={markAsAdopted}
-          />
-        ))
+        <div className="row">
+          {animals.map((animal, index) => (
+            <div key={index} className="col-md-4">
+              <div className="card mb-3">
+                <img
+                  src={animal.imageURL}
+                  alt={animal.name}
+                  className="card-img-top"
+                  style={{ height: "200px", objectFit: "cover" }}
+                />
+                <div className="card-body">
+                  <h5 className="card-title">{animal.name}</h5>
+                  <p className="card-text">Raza: {animal.breed}</p>
+                  <p className="card-text">Tamaño: {animal.size}</p>
+                  <p className="card-text">Vacunado: {animal.vaccinated ? "Sí" : "No"}</p>
+                  <p className="card-text">{animal.description}</p>
+                  <p className="card-text">Contacto: {animal.contact}</p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
       )}
     </div>
   );
