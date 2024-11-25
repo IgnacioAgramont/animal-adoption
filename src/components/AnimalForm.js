@@ -32,7 +32,6 @@ const AnimalForm = ({ onNewAnimal }) => {
       Bucket: "agramont-animal-adoption",
       Key: `animals/${image.name}`,
       Body: image,
-      ACL: "public-read",
     };
 
     try {
