@@ -3,9 +3,12 @@ import { Link } from "react-router-dom";
 
 const Navbar = () => {
   return (
-    <nav className="navbar navbar-expand-lg navbar-light bg-light">
+    <nav
+      className="navbar navbar-expand-lg"
+      style={{ backgroundColor: "#87CEEB" }} // Fondo celeste
+    >
       <div className="container">
-        <Link className="navbar-brand" to="/">
+        <Link className="navbar-brand" to="/" style={{ color: "#fff" }}>
           Adopción de Animales
         </Link>
         <button
@@ -22,12 +25,12 @@ const Navbar = () => {
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav ms-auto">
             <li className="nav-item">
-              <Link className="nav-link" to="/">
+              <Link className="nav-link" to="/" style={{ color: "#fff" }}>
                 Inicio
               </Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="/add-animal">
+              <Link className="nav-link" to="/add-animal" style={{ color: "#fff" }}>
                 Agregar Animales
               </Link>
             </li>
@@ -38,4 +41,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
+export default Navbar; // Exportación por defecto
